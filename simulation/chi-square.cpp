@@ -1,57 +1,51 @@
 #include<bits/stdc++.h>
+#include<math.h>
 using namespace std;
+int main(){
+    int n;
 
-int main()
-{
-    int n, observed[20], i, N, Expected;
-    float Calculation[20], finalVal, critical;
-    N =0;
-    finalVal = 0.0;
+    cout << "Enter the frequency: ";
+    cin >> n;
 
-    // getting observed frequency
-    cout << "How many classes: ";
-    cin >>n;
+    int observed[n], i, N = 0, Expected;
+    float Calculation[n], Dobs = 0.00, critical;
 
-    cout << "Enter the observed frequency: " << endl;
     for(i = 0; i < n; i++){
-        cout << "Enter obsrved frequency of " << i+1 << "th number: ";
+        cout << "Enter " << i+1 << "th observed value:";
         cin >> observed[i];
+        N += observed[i];
     }
 
-    // calculation of N(total frequency), Calculation(((Oi-Ei)^2/Ei)), finalVal(?)
+    Expected = N/n;
+
     for(i = 0; i < n; i++){
-        Calculation[i] = (float)((observed[i]-Expected)*(observed[i]-Expected))/Expected;
-        finalVal += Calculation[i];
+        Calculation[i] = (float)pow((observed[i] - Expected), 2)/Expected;
+        Dobs += Calculation[i];
     }
 
-    // display in tabulated format
+    cout << setw(10) << "SL.no";
+    cout << setw(10) << "Oi";
+    cout << setw(15) << "Ei";
+    cout << setw(10) << "((Oi-Ei)^2)/Ei" << endl;
 
-    cout << setw(5) << "S.No";
-    cout << setw(5) << "Oi";
-    cout << setw(5) << "Ei";
 
-
-    cout << setw(22) << "((Oi-Ei)*(Oi-Ei))/Ei" << endl;
     for(i = 0; i < n; i++){
-        cout << setw(5) << i+1;
-        cout << setw(5) << observed[i];
-        cout << setw(5) << Expected;
+        cout << setw(10) << i + 1;
+        cout << setw(10) << observed[i];
+        cout << setw(15) << Expected;
         cout << setw(10) << setprecision(2) << Calculation[i] << endl;
     }
-    cout <<"---------------------------------------"<< endl;
-    cout << setw(10) << N;
-    cout << setw(15) << finalVal << endl;
+    cout << "----------------------------------------------------" << endl;
 
+    cout << setw(20) << N << setw(25) << setprecision(2) << Dobs << endl;
 
-    //compare tabulated and calculated value and conclude if Ho is accepted
-
-    cout << endl;
-    cout << "Enter the critical value: " << endl;
+    cout << "Enter critical value: " ;
     cin >> critical;
-    if(finalVal < critical){
-        cout << "The Test is acceted" <<endl;
+
+    if(Dobs < critical){
+        cout << "Test is Accepted" << endl;
     }else{
-        cout << "The test is rejected" << endl;
+        cout << "Test is Decline" << endl;
     }
-    return 0;
+ return 0;
 }
